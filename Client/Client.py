@@ -12,7 +12,8 @@ class Client:
     def send_task(self, task):
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.leader_host, self.leader_port))
-        client_socket.sendall(json.dumps(task).encode('utf-8'))
+        message = json.dumps(task) + '\n'  # Añadir delimitador al final del mensaje
+        client_socket.sendall(message.encode('utf-8'))
         client_socket.close()
 
     def send_file_task(self, file_path, task_type, additional_params={}):

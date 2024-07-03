@@ -27,8 +27,9 @@ class WorkerNode:
         leader_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         leader_socket.connect((self.leader_host, self.leader_port))
         registration_message = json.dumps({"type": "register", "host": self.host, "port": self.port})
+        print(f"Enviando mensaje de registro al líder: {registration_message}")
         leader_socket.sendall(registration_message.encode('utf-8'))
-        leader_socket.close()
+        leader_socket.close()  # considera mantener esto abierto si esperas una respuesta
 
     def handle_task(self, client_socket):
         try:
