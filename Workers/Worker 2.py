@@ -33,11 +33,29 @@ class WorkerNode:
 
     def handle_task(self, client_socket):
         try:
-            task = client_socket.recv(1024).decode('utf-8')
-            task_data = json.loads(task)
+            # Recibir el mensaje JSON completo
+            full_message = ''
+            while True:
+                message_part = client_socket.recv(1024).decode('utf-8')
+                if '\n' in message_part:
+                    full_message += message_part
+                    break
+                full_message += message_part
+
+            task = json.loads(full_message.strip())
+
+            if "file_name" in task:
+                file_path = f"./{task['file_name']}"
+                with open(file_path, 'wb') as f:
+                    while True:
+                        chunk = client_socket.recv(1024)
+                        if chunk == b'END_OF_FILE':
+                            break
+                        f.write(chunk)
+                task["file_path"] = file_path
 
             # Procesar la tarea
-            result = self.process_task(task_data)
+            result = self.process_task(task)
 
             # Enviar el resultado de vuelta al líder
             result_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -53,6 +71,10 @@ class WorkerNode:
             client_socket.close()
 
     def process_task(self, task):
+        if "file_path" in task:
+            with open(task["file_path"], 'r') as file:
+                task["text"] = file.read()
+
         # Implementar la lógica de procesamiento de tareas aquí
         if task["type"] == "word_count":
             return self.count_words(task["text"], task.get("word"))

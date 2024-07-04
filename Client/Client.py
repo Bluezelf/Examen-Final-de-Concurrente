@@ -3,35 +3,37 @@ import json
 import os
 
 
-# Cliente
 class Client:
     def __init__(self, leader_host, leader_port):
         self.leader_host = leader_host
         self.leader_port = leader_port
 
-    def send_task(self, task):
+    def send_task(self, task, file_path=None):
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.leader_host, self.leader_port))
-        message = json.dumps(task) + '\n'  # Añadir delimitador al final del mensaje
+        message = json.dumps(task) + '\n'
         client_socket.sendall(message.encode('utf-8'))
+
+        if file_path:
+            with open(file_path, 'rb') as file:
+                while chunk := file.read(1024):
+                    client_socket.sendall(chunk)
+            client_socket.sendall(b'END_OF_FILE')  # Marcador para indicar el fin del archivo
+
         client_socket.close()
 
     def send_file_task(self, file_path, task_type, additional_params={}):
         if not os.path.exists(file_path):
             print(f"Error: El archivo {file_path} no existe.")
-            print(f"Directorio actual de trabajo: {os.getcwd()}")
             return
-
-        with open(file_path, 'r') as file:
-            text = file.read()
 
         task = {
             "type": task_type,
-            "text": text
+            "file_name": os.path.basename(file_path),
         }
         task.update(additional_params)
 
-        self.send_task(task)
+        self.send_task(task, file_path)
 
 
 if __name__ == "__main__":

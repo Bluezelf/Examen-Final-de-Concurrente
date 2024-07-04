@@ -2,6 +2,7 @@ import socket
 import threading
 import json
 
+
 # Nodo Líder
 class LeaderNode:
     def __init__(self, host, port):
@@ -26,14 +27,28 @@ class LeaderNode:
             full_message = ''
             while True:
                 message_part = client_socket.recv(1024).decode('utf-8')
-                if not message_part:
+                if '\n' in message_part:
+                    full_message += message_part
                     break
                 full_message += message_part
-            print(f"Mensaje completo recibido: {full_message}")
-            task = json.loads(full_message)
+            print(f"Mensaje completo recibido: {full_message.strip()}")
+            task = json.loads(full_message.strip())
             if task.get("type") == "register":
                 self.register_worker(client_socket, addr, task)
+            elif task.get("type") == "result":
+                self.handle_result(task)
             else:
+                if "file_name" in task:
+                    # Recibir archivo en bloques
+                    file_path = f"./{task['file_name']}"
+                    with open(file_path, 'wb') as f:
+                        while True:
+                            chunk = client_socket.recv(1024)
+                            if chunk == b'END_OF_FILE':
+                                break
+                            f.write(chunk)
+                    task["file_path"] = file_path
+
                 self.assign_task(task)
         except json.JSONDecodeError as e:
             print(f"Error de JSON al manejar la conexión de {addr}: {e}")
@@ -42,6 +57,10 @@ class LeaderNode:
         finally:
             client_socket.close()
 
+    def handle_result(self, task):
+        print(f"Resultado recibido: {task['result']}")
+        # Aquí puedes procesar el resultado como desees, por ejemplo, almacenarlo, imprimirlo, etc.
+
     def assign_task(self, task):
         if self.workers:
             task_assigned = False
@@ -49,7 +68,16 @@ class LeaderNode:
                 if worker_socket:  # Verificar que el socket está activo y no cerrado
                     try:
                         # Intentar enviar la tarea al trabajador
-                        worker_socket.send(json.dumps(task).encode('utf-8'))
+                        message = json.dumps(task) + '\n'
+                        worker_socket.sendall(message.encode('utf-8'))
+
+                        # Enviar el archivo si existe
+                        if "file_path" in task:
+                            with open(task["file_path"], 'rb') as file:
+                                while chunk := file.read(1024):
+                                    worker_socket.sendall(chunk)
+                            worker_socket.sendall(b'END_OF_FILE')
+
                         print(f"Tarea enviada a {worker_addr}")
                         task_assigned = True
                         break  # Salir del loop si la tarea se asignó correctamente
@@ -82,7 +110,15 @@ class LeaderNode:
             print(f"Reconectado con éxito a {worker_addr}")
 
             # Reintentar enviar la tarea después de la reconexión
-            new_socket.send(json.dumps(task).encode('utf-8'))
+            message = json.dumps(task) + '\n'
+            new_socket.sendall(message.encode('utf-8'))
+
+            if "file_path" in task:
+                with open(task["file_path"], 'rb') as file:
+                    while chunk := file.read(1024):
+                        new_socket.sendall(chunk)
+                new_socket.sendall(b'END_OF_FILE')
+
             print(f"Tarea reenviada con éxito a {worker_addr}")
         except Exception as e:
             print(f"No se pudo reconectar con {worker_addr}: {e}")
@@ -104,6 +140,7 @@ class LeaderNode:
                 for task in self.tasks:
                     self.assign_task(task)
                 self.tasks = []
+
 
 if __name__ == "__main__":
     leader = LeaderNode('127.0.0.1', 5000)
