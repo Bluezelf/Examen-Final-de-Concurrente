@@ -1,49 +1,113 @@
 import socket
 import json
 import os
-
+import time
 
 class Client:
     def __init__(self, leader_host, leader_port):
-        self.leader_host = leader_host
-        self.leader_port = leader_port
+        self.leader_address = ('192.168.1.33', 5000)
 
-    def send_task(self, task, file_path=None):
-        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect((self.leader_host, self.leader_port))
-        message = json.dumps(task) + '\n'
-        client_socket.sendall(message.encode('utf-8'))
+    def start(self):
+        while True:
+            leader_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            leader_socket.connect(self.leader_address)
 
-        if file_path:
-            with open(file_path, 'rb') as file:
-                while chunk := file.read(1024):
-                    client_socket.sendall(chunk)
-            client_socket.sendall(b'END_OF_FILE')  # Marcador para indicar el fin del archivo
+            # print(f"Conectado a {self.leader_address}")
+            registration_message = json.dumps({"type": "reg-client", "host": "waaa", "port": "weee"})
+            # print(f"Enviando mensaje de registro al líder: {registration_message}")
+            leader_socket.sendall(registration_message.encode('utf-8'))
 
-        client_socket.close()
+            m = leader_socket.recv(1024).decode('utf-8')
+            conf_msg = json.loads(m)
+            if conf_msg.get("status"):
+                # print("Found leader")
+                break
+            else:
+                self.leader_address = tuple(conf_msg.get("leader"))
 
-    def send_file_task(self, file_path, task_type, additional_params={}):
-        if not os.path.exists(file_path):
-            print(f"Error: El archivo {file_path} no existe.")
-            return
+        self.command_handler(leader_socket)
 
-        task = {
-            "type": task_type,
-            "file_name": os.path.basename(file_path),
-        }
-        task.update(additional_params)
+    def command_handler(self, leader_socket):
+        while True:
+            print("===== CLIENTE =====")
+            print("Escoger uno de los siguientes comandos: ")
+            print("\t[1] Contar palabras.")
+            print("\t[2] Encontrar palabra clave.")
+            print("\t[3] Contar palabra clave.")
+            command = input("==> ")
 
-        self.send_task(task, file_path)
+            match int(command):
+                case 1:
+                    file_name = self.send_file(leader_socket)
+                    time.sleep(0.1)
+                    msg = json.dumps({"type": "req-count_words", "name": file_name, "keyword": None})
+                    # print(f"Enviando mensaje: {msg}")
+                    leader_socket.sendall(msg.encode('utf-8'))
+                    self.wait_response(leader_socket)
 
+                case 2:
+                    print("\tPalabra clave a buscar: ")
+                    keyword = input()
+                    file_name = self.send_file(leader_socket)
+                    time.sleep(0.1)
+                    msg = json.dumps({"type": "req-find_keyword", "name": file_name, "keyword": keyword})
+                    # print(f"Enviando mensaje: {msg}")
+                    leader_socket.sendall(msg.encode('utf-8'))
+                    self.wait_response(leader_socket)
+
+                case 3:
+                    print("\tPalabra clave a contar: ")
+                    keyword = input()
+                    file_name = self.send_file(leader_socket)
+                    time.sleep(0.1)
+                    msg = json.dumps({"type": "req-count_keyword", "name": file_name, "keyword": keyword})
+                    # print(f"Enviando mensaje: {msg}")
+                    leader_socket.sendall(msg.encode('utf-8'))
+                    self.wait_response(leader_socket)
+
+
+            print()
+
+    def wait_response(self, leader_socket):
+        # print("waiting for response...")
+        m = leader_socket.recv(1024).decode('utf-8')
+        msg = json.loads(m)
+        # print(msg)
+        match msg.get("type"):
+            case "count_words":
+                print(f"Hay {msg.get("rpta")} palabras!")
+            case "find_keyword":
+                if msg.get("rpta"):
+                    print("La palabra si se encuentra en el texto!")
+                else:
+                    print("La palabra no se encuentra en el texto...")
+
+            case "count_keyword":
+                print(f"La palabra aparece {msg.get("rpta")} veces!")
+
+    def send_file(self, leader_socket):
+        # print("Sending file to leader")
+
+        files = [file for file in os.listdir() if '.txt' in file]
+        print("Archivos disponibles: ")
+        for i, f in enumerate(files):
+            print(f"\t[{i}] {f}")
+        file_idx = input("Archivo a mandar: ")
+        file_name = files[int(file_idx)]
+
+        # Aviso de que se mandara un archivo
+        msg = json.dumps({"type": "send-file", "name": file_name})
+        leader_socket.sendall(msg.encode('utf-8'))
+
+        with open(file_name, 'rb') as file:
+            # print("Enviando texto...")
+            while chunk := file.read(1024):
+                leader_socket.sendall(chunk)
+        leader_socket.sendall(b'END_OF_FILE')
+        # print("Texto enviado!")
+
+        return file_name
 
 if __name__ == "__main__":
     client = Client('127.0.0.1', 5000)
-
-    # Ejemplo de tarea: Contar una palabra específica en el archivo de texto
-    client.send_file_task('Mitesto.txt', 'word_count', {"word": "test"})
-
-    # Ejemplo de tarea: Buscar palabras clave en el archivo de texto
-    client.send_file_task('Mitesto.txt', 'keyword_search', {"keywords": ["example", "test"]})
-
-    # Ejemplo de tarea: Buscar palabras clave repetidas n veces en el archivo de texto
-    client.send_file_task('Mitesto.txt', 'repeated_keyword_search', {"keyword": "example", "count": 3})
+    client.start()

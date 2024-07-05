@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f34e8db-5782-4e79-a381-de58db8b3bbe" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Client/testing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Mitesto.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mitesto.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Workers/LeaderWorker.py" beforeDir="false" afterPath="$PROJECT_DIR$/Workers/LeaderWorker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workers/Mitesto.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Workers/Mitesto.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Workers/Worker 2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Workers/Worker 2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workers/Worker 3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Workers/Worker 3.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Workers/Worker.py" beforeDir="false" afterPath="$PROJECT_DIR$/Workers/Worker.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +49,7 @@
     "Python.Worker 2.executor": "Run",
     "Python.Worker 3.executor": "Run",
     "Python.Worker.executor": "Run",
+    "Python.testing.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
@@ -129,29 +133,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Worker 3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Examen-Final-de-Concurrente" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Workers" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Workers/Worker 3.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="Worker" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
       <module name="Examen-Final-de-Concurrente" />
       <option name="ENV_FILES" value="" />
@@ -198,28 +179,52 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="testing" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Examen-Final-de-Concurrente" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Client" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Client/testing.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.testing" />
       <item itemvalue="Python.Client" />
-      <item itemvalue="Python.Worker 2" />
-      <item itemvalue="Python.Worker 3" />
       <item itemvalue="Python.LeaderWorker" />
+      <item itemvalue="Python.Worker 2" />
       <item itemvalue="Python.Worker" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Client" />
+        <item itemvalue="Python.Worker 2" />
         <item itemvalue="Python.Worker" />
         <item itemvalue="Python.LeaderWorker" />
-        <item itemvalue="Python.Worker 3" />
-        <item itemvalue="Python.Worker 2" />
+        <item itemvalue="Python.testing" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.17890.14" />
+        <option value="bundled-python-sdk-5b207ade9991-7e9c3bbb6e34-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.17890.14" />
       </set>
     </attachedChunks>
   </component>
@@ -235,6 +240,10 @@
       <workItem from="1719421574882" duration="557000" />
       <workItem from="1719443654757" duration="6565000" />
       <workItem from="1719950390208" duration="11017000" />
+      <workItem from="1720115565726" duration="2000" />
+      <workItem from="1720115586369" duration="865000" />
+      <workItem from="1720117786672" duration="20000" />
+      <workItem from="1720117822141" duration="26273000" />
     </task>
     <servers />
   </component>
@@ -242,10 +251,15 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Examen_Final_de_Concurrente$Worker_2.coverage" NAME="Worker 2 Coverage Results" MODIFIED="1719964021612" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Workers" />
-    <SUITE FILE_PATH="coverage/Examen_Final_de_Concurrente$Worker.coverage" NAME="Worker Coverage Results" MODIFIED="1720062576252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Workers" />
     <SUITE FILE_PATH="coverage/Examen_Final_de_Concurrente$LeaderWorker.coverage" NAME="LeaderWorker Coverage Results" MODIFIED="1720062572523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Workers" />
-    <SUITE FILE_PATH="coverage/Examen_Final_de_Concurrente$Client.coverage" NAME="Client Coverage Results" MODIFIED="1720062580020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Client_py$Worker.coverage" NAME="Worker Coverage Results" MODIFIED="1720147092586" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Workers" />
+    <SUITE FILE_PATH="coverage/Examen_Final_de_Concurrente$Worker_2.coverage" NAME="Worker 2 Coverage Results" MODIFIED="1719964021612" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Workers" />
+    <SUITE FILE_PATH="coverage/Client_py$LeaderWorker.coverage" NAME="LeaderWorker Coverage Results" MODIFIED="1720147089983" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Workers" />
     <SUITE FILE_PATH="coverage/Examen_Final_de_Concurrente$Worker_3.coverage" NAME="Worker 3 Coverage Results" MODIFIED="1719964026041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Workers" />
+    <SUITE FILE_PATH="coverage/Client_py$testing.coverage" NAME="testing Coverage Results" MODIFIED="1720143574803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Client_py$Client.coverage" NAME="Client Coverage Results" MODIFIED="1720147097913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Examen_Final_de_Concurrente$Worker.coverage" NAME="Worker Coverage Results" MODIFIED="1720062576252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Workers" />
+    <SUITE FILE_PATH="coverage/Examen_Final_de_Concurrente$Client.coverage" NAME="Client Coverage Results" MODIFIED="1720062580020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Client_py$Worker_2.coverage" NAME="Worker 2 Coverage Results" MODIFIED="1720147095069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Workers" />
   </component>
 </project>
