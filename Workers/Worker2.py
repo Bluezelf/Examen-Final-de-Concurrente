@@ -215,8 +215,6 @@ class Node:
                         if file_chunk:
                             msg = json.dumps({"type": command, "text": file_chunk, "keyword": keyword,
                                               "client": str(server_socket.getpeername())})
-                            task = (str(server_socket.getpeername()), str(worker[0].getpeername()), msg)
-                            self.pending_tasks.append(task)
                             num_tasks += 1
                             worker[0].sendall(msg.encode('utf-8'))
                             time.sleep(0.1)
@@ -239,7 +237,10 @@ class Node:
                         result = bool(result) or compl_task[2]
                         num_tasks -= 1
                     elif type(compl_task[2]) is int:
-                        result += compl_task[2]
+                        if command == 'count_words':
+                            result = result + compl_task[2] - 1
+                        else:
+                            result += compl_task[2]
                         num_tasks -= 1
                     self.completed_tasks.remove(compl_task)
 
